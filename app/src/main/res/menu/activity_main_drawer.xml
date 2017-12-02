@@ -11,26 +11,26 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_group_work"
-            android:title="@string/nav_photos" />
+            android:title="@string/nav_groupwork" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_calendar"
-            android:title="@string/nav_movies" />
+            android:title="@string/nav_events" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_group"
-            android:title="@string/nav_settings" />
+            android:title="@string/nav_members" />
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_protocol"
-            android:title="@string/nav_notifications" />
+            android:title="@string/nav_protocols" />
        <!-- <item
             android:id="@+id/nav_send"
             android:icon="@drawable/ic_menu_about"
             android:title="@string/nav_about_us" /> -->
     </group>
 
-    <item android:title="Profil">
+    <item android:title="@string/nav_title">
         <menu>
 
             <item

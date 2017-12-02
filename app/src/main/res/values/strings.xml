@@ -14,26 +14,12 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="nav_home">Startseite</string>
-    <string name="nav_photos">Arbeitsgruppe</string>
-    <string name="nav_movies">Termine</string>
-    <string name="nav_notifications">Protokolle</string>
-    <string name="nav_settings">Mitglieder</string>
+    <string name="nav_groupwork">Arbeitsgruppe</string>
+    <string name="nav_events">Termine</string>
+    <string name="nav_protocols">Protokolle</string>
+    <string name="nav_members">Mitglieder</string>
     <string name="nav_logout">Abmelden</string>
     <string name="nav_about_us">Über uns</string>
+    <string name="nav_title">Profil</string>
 
-    <!-- Toolbar titles when navigation menu item is selected -->
-    <string-array name="nav_item_activity_titles">
-        <item>Home</item>
-        <item>Photos</item>
-        <item>Movies</item>
-        <item>Notifications</item>
-        <item>Settings</item>
-    </string-array>
-
-    <string name="activity_title_about_us">About Us</string>
-    <string name="activity_title_privacy_policy">Privacy Policy</string>
-    <string name="action_clear_all">Clear All</string>
-    <string name="action_logout">Logout</string>
-    <string name="action_mark_all_read">Mark All as Read</string>
-    <string name="privacy_policy">Privacy Policy</string>
 </resources>
