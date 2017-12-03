@@ -6,9 +6,6 @@
 
     <string name="action_settings">Einstellungen</string>
 
-    <string name="openDrawer">open_drawer</string>
-    <string name="closeDrawer">close_drawer</string>
-
     <string name="username">SV-Mitglied</string>
     <string name="email">sv@gss-bensheim.de</string>
 
