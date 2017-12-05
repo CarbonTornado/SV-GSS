@@ -1,5 +1,6 @@
 package app.de.sv_gss.navdrawer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return new MyViewHolder(v);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         // set the data in items
@@ -57,6 +59,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public int getItemCount() {
         return name.size();
     }
+
+ /*   @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }*/
 
     protected class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name, email, mobileNo, leiter;// init the item view's

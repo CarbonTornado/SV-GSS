@@ -1,64 +1,52 @@
 package app.de.sv_gss.navdrawer;
 
-import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener,
+        GroupworkFragment.OnFragmentInteractionListener, EventsFragment.OnFragmentInteractionListener, MembersFragment.OnFragmentInteractionListener, ProtocolsFragment.OnFragmentInteractionListener {
 
     // ArrayList for person names, email Id's and mobile numbers
-    ArrayList<String> name = new ArrayList<>();
+  /*  ArrayList<String> name = new ArrayList<>();
     ArrayList<String> beschreibung = new ArrayList<>();
     ArrayList<String> leiter = new ArrayList<>();
     ArrayList<String> termine = new ArrayList<>();
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView;*/
 
     boolean connected = false;
     boolean geladen = false;
+
+    private static Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MainActivity.context = getApplicationContext();
 
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         // we are connected to a network
@@ -66,12 +54,32 @@ public class MainActivity extends AppCompatActivity
                 (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED);
 
         // get the reference of RecyclerView
-        recyclerView = findViewById(R.id.recyclerView);
+        /*recyclerView = findViewById(R.id.recyclerView);
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (savedInstanceState == null) {
+            Fragment fragment = null;
+            Class fragmentClass = null;
+            fragmentClass = HomeFragment.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +100,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
     }
-    private void getJSON(final String urlWebService) {
+
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
+
+ /*   private void getJSON(final String urlWebService) {
         /*
         * As fetching the json string is a network operation
         * And we cannot perform a network operation in main thread
@@ -104,7 +118,7 @@ public class MainActivity extends AppCompatActivity
         * */
 
         //Toast.makeText(getApplicationContext(), "getJSON", Toast.LENGTH_SHORT).show();
-        @SuppressLint("StaticFieldLeak")
+    /*    @SuppressLint("StaticFieldLeak")
         class GetJSON extends AsyncTask<Void, Void, String> {
 
             //this method will be called before execution
@@ -123,7 +137,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 if(s != null && !s.trim().isEmpty()){
                     writeToFile(s,getApplicationContext());
                 }
@@ -249,7 +263,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         return ret;
-    }
+    } */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -276,7 +290,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -288,34 +302,52 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Fragment fragment = null;
+        Class fragmentClass = null;
         if (id == R.id.nav_home) {
             // Handle the home action
+            fragmentClass = HomeFragment.class;
 
         } else if (id == R.id.nav_gallery) {
-            if(!geladen) {
-                getJSON("https://sv-gss.de/app/arbeitsgruppe.php?token=1303");
+            fragmentClass = GroupworkFragment.class;
+              /* getJSON("https://sv-gss.de/app/arbeitsgruppe.php?token=1303");
                 String s = readFromFile(getApplicationContext());
                 try {
                     loadIntoListView(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
-            }
+                }*/
+
 
         } else if (id == R.id.nav_slideshow) {
+            fragmentClass = EventsFragment.class;
 
         } else if (id == R.id.nav_manage) {
-
+            fragmentClass = MembersFragment.class;
         } else if (id == R.id.nav_share) {
-
+            fragmentClass = ProtocolsFragment.class;
         }/* else if (id == R.id.nav_send) {
 
         }*/
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);*/
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
 }

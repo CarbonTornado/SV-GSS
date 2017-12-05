@@ -19,4 +19,14 @@
     <string name="nav_about_us">Über uns</string>
     <string name="nav_title">Profil</string>
 
+    <string name="hello_blank_fragment_one">1</string>
+    <string name="hello_blank_fragment_two">2</string>
+    <string name="hello_blank_fragment_three">3</string>
+    <string name="hello_blank_fragment_four">4</string>
+    <string name="hello_blank_fragment_five">5</string>
+
+    <string name="preference_aktienliste_title">Liste der Finanzinstrumente</string>
+    <string name="preference_aktienliste_key">aktienliste</string>
+    <string name="preference_aktienliste_default">BMW.DE,DAI.DE,VOW3.DE,SAP.DE,^GDAXI</string>
+
 </resources>

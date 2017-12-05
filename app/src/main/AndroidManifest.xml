@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="app.de.sv_gss.navdrawer">
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--Might be removed-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -25,6 +26,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.programmierenlernenhq.aktiehq.app.MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>
